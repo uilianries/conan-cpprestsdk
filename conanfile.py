@@ -21,7 +21,7 @@ class CppRestSDKConan(ConanFile):
     cpprestsdk_dir = "%s-%s" % (name, version)
 
     def source(self):
-        self.run("git clone --branch v%s %s.git %s" % (self.version, self.url, self.cpprestsdk_dir))
+        self.run("git clone --depth=50 --branch=v%s %s.git %s" % (self.version, self.url, self.cpprestsdk_dir))
 
     def build(self):
         cmake = CMake(self)
