@@ -25,11 +25,21 @@ class CppRestSDKConan(ConanFile):
 
     def build(self):
         cmake = CMake(self)
-        # TODO (uilianries): Use scope to solve tests https://conanio.readthedocs.io/en/latest/mastering/scopes.html
-        cmake.definitions["BUILD_TESTS"] = False
-        cmake.definitions["BUILD_SAMPLES"] = False
+        cmake.definitions["BUILD_TESTS"] = True if self.scope.dev and self.scope.build_tests else False
+        cmake.definitions["BUILD_SAMPLES"] = True if self.scope.dev and self.scope.build_samples else False
+        if cmake.definitions["BUILD_TESTS"] and self.settings.os == "Linux":
+            self._insert_pthread()
         cmake.configure()
         cmake.build()
+
+    def _insert_pthread(self):
+        # test_runner does not find pthread_create
+        old_line = "        -Wl,--whole-archive"
+        new_line = """        -Wl,--whole-archive
+        pthread"""
+        cmake_path = path.join(self.cpprestsdk_dir, "Release", "tests", "common", "TestRunner", "CMakeLists.txt")
+        tools.replace_in_file(cmake_path, old_line, new_line)
+
 
     def package(self):
         release_dir = path.join(self.cpprestsdk_dir, "Release")
