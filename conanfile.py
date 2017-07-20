@@ -49,7 +49,7 @@ class CppRestSDKConan(ConanFile):
         self.copy(pattern="*.dat", dst="include", src=path.join(release_dir, "include"))
         self.copy(pattern="*.so*", dst="lib", src=path.join(release_dir, "Binaries"), keep_path=False)
         self.copy(pattern="*.a", dst="lib", src="lib", keep_path=False)
-        self.copy(pattern="*.dylib", dst="lib", src="lib", keep_path=False)
+        self.copy(pattern="*.dylib", dst="lib", src=path.join(release_dir, "Binaries"), keep_path=False)
         self.copy(pattern="*.lib", dst="lib", src="lib", keep_path=False)
         self.copy(pattern="*.dll", dst="bin", src="bin", keep_path=False)
 
