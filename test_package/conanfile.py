@@ -14,7 +14,7 @@ class TestCppRestSDKConan(ConanFile):
     generators = "cmake"
     channel = getenv("CONAN_CHANNEL", "testing")
     username = getenv("CONAN_USERNAME", "uilianries")
-    requires = "cpprestsdk/2.9.1@%s/%s" % (username, channel)
+    requires = "cpprestsdk/2.9.1@%s/%s" % (username, channel), "Catch/1.9.5@uilianries/stable"
 
     def build(self):
         cmake = CMake(self)

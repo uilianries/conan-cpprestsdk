@@ -2,6 +2,7 @@
 """
 from conans import ConanFile, CMake, tools
 from os import path
+import subprocess
 
 class CppRestSDKConan(ConanFile):
     """Checkout CppRestSDK, build and create package
@@ -31,6 +32,8 @@ class CppRestSDKConan(ConanFile):
             self._insert_pthread()
         cmake.configure()
         cmake.build()
+        if self.settings.os == "Macos":
+            subprocess.call(["find", '-name "*.dylib*"'], shell=True)
 
     def _insert_pthread(self):
         # test_runner does not find pthread_create
@@ -49,7 +52,7 @@ class CppRestSDKConan(ConanFile):
         self.copy(pattern="*.dat", dst="include", src=path.join(release_dir, "include"))
         self.copy(pattern="*.so*", dst="lib", src=path.join(release_dir, "Binaries"), keep_path=False)
         self.copy(pattern="*.a", dst="lib", src="lib", keep_path=False)
-        self.copy(pattern="*.dylib", dst="lib", src=path.join(release_dir, "Binaries"), keep_path=False)
+        self.copy(pattern="*.dylib*", dst="lib", src=path.join(release_dir, "Binaries"), keep_path=False)
         self.copy(pattern="*.lib", dst="lib", src="lib", keep_path=False)
         self.copy(pattern="*.dll", dst="bin", src="bin", keep_path=False)
 
