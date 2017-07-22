@@ -20,7 +20,6 @@ if [[ "$(uname -s)" == 'Darwin' ]]; then
 fi
 
 pip install conan --upgrade
-# TODO (uilian.ries): Update to 0.5.3 ASAP
-pip install conan_package_tools==0.5.0
+pip install conan_package_tools
 
 conan user
