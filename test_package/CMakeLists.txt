@@ -11,10 +11,13 @@ include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
 # Build test ###################################################################
-add_executable(${CMAKE_PROJECT_NAME} main.cpp)
+file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+add_executable(${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
 target_link_libraries(${CMAKE_PROJECT_NAME} ${CONAN_LIBS})
 set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY CXX_STANDARD 11)
 
 # Execute test #################################################################
 enable_testing()
-add_test(http-request bin/${CMAKE_PROJECT_NAME})
+add_test(NAME test-all
+         COMMAND ${CMAKE_PROJECT_NAME}
+         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
