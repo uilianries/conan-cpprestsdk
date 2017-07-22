@@ -24,6 +24,10 @@ class CppRestSDKConan(ConanFile):
     def source(self):
         self.run("git clone --depth=50 --branch=v%s %s.git %s" % (self.version, self.url, self.cpprestsdk_dir))
 
+    def config_options(self):
+         if self.settings.compiler == "Visual Studio":
+            self.options.remove("fPIC")
+
     def build(self):
         cmake = CMake(self)
         cmake.definitions["BUILD_TESTS"] = True if self.scope.dev and self.scope.build_tests else False
@@ -32,8 +36,6 @@ class CppRestSDKConan(ConanFile):
             self._insert_pthread()
         cmake.configure()
         cmake.build()
-        if self.settings.os == "Macos":
-            subprocess.call(["find", '-name "*.dylib*"'], shell=True)
 
     def _insert_pthread(self):
         # test_runner does not find pthread_create
