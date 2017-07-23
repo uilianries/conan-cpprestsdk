@@ -25,7 +25,7 @@ class CppRestSDKConan(ConanFile):
         self.run("git clone --depth=50 --branch=v%s %s.git %s" % (self.version, self.url, self.cpprestsdk_dir))
 
     def config_options(self):
-         if self.settings.compiler == "Visual Studio":
+        if self.settings.os == "Windows":
             self.options.remove("fPIC")
 
     def build(self):
