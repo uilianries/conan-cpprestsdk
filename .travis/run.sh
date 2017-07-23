@@ -10,6 +10,5 @@ if [[ "$(uname -s)" == 'Darwin' ]]; then
     pyenv activate conan
 fi
 
-python build.py
-
+python build.py || true
 conan upload -r upload_repo "*" --all --confirm --force
