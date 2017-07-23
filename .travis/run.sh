@@ -11,3 +11,5 @@ if [[ "$(uname -s)" == 'Darwin' ]]; then
 fi
 
 python build.py
+
+conan upload -r upload_repo "*" --all --confirm --force
