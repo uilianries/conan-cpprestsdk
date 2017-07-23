@@ -18,15 +18,15 @@ class CppRestSDKConan(ConanFile):
     description = "A project for cloud-based client-server communication in native code using a modern asynchronous C++ API design"
     license = "https://github.com/Microsoft/cpprestsdk/blob/master/license.txt"
     requires = "Boost/1.62.0@lasote/stable", "OpenSSL/1.0.2l@conan/stable"
-    default_options = "shared=True", "Boost:fPIC=True"
+    default_options = "shared=True"
     cpprestsdk_dir = "%s-%s" % (name, version)
 
     def source(self):
         self.run("git clone --depth=50 --branch=v%s %s.git %s" % (self.version, self.url, self.cpprestsdk_dir))
 
     def config_options(self):
-        if self.settings.os == "Windows":
-            self.options.remove("fPIC")
+        if self.settings.os == "Linux":
+            self.default_options = self.default_options, "Boost:fPIC=True"
 
     def build(self):
         cmake = CMake(self)
