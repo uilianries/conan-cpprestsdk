@@ -1,6 +1,7 @@
 """Conan.io recipe for CppRestSDK library
 """
 from conans import ConanFile, CMake
+from conans.model.options import OptionsValues
 from os import path
 from tempfile import mkdtemp
 
@@ -25,6 +26,10 @@ class CppRestSDKConan(ConanFile):
 
     def source(self):
         self.run("git clone --depth=50 --branch=v%s %s.git %s" % (self.version, self.url, self.cpprestsdk_dir))
+
+    def config_options(self):
+        if self.settings.os == "Linux":
+            self.options.values = OptionsValues.loads("Boost:fPIC=True")
 
     def build(self):
         cmake = CMake(self)
