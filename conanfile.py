@@ -1,9 +1,8 @@
 """Conan.io recipe for CppRestSDK library
 """
-from conans import ConanFile, CMake, tools
+from conans import ConanFile, CMake
 from os import path
 from tempfile import mkdtemp
-import subprocess
 
 
 class CppRestSDKConan(ConanFile):
