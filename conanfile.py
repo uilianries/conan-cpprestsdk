@@ -26,10 +26,6 @@ class CppRestSDKConan(ConanFile):
     def source(self):
         self.run("git clone --depth=50 --branch=v%s %s.git %s" % (self.version, self.url, self.cpprestsdk_dir))
 
-    def config_options(self):
-        if self.settings.os == "Linux":
-            self.default_options = self.default_options, "Boost:fPIC=True"
-
     def build(self):
         cmake = CMake(self)
         cmake.definitions["CMAKE_INSTALL_PREFIX"] = self.install_dir
