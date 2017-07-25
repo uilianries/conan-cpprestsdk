@@ -1,4 +1,6 @@
-[![Build Status](https://travis-ci.org/uilianries/conan-cpprestsdk.svg?branch=release/2.9.1)](https://travis-ci.org/uilianries/conan-cpprestsdk)  [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
+[![Travis Build Status](https://travis-ci.org/uilianries/conan-cpprestsdk.svg?branch=release/2.9.1)](https://travis-ci.org/uilianries/conan-cpprestsdk)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/goisbnt12o3ueq3o/branch/release/2.9.1?svg=true)](https://ci.appveyor.com/project/uilianries/conan-cpprestsdk/branch/release/2.9.1)
+[![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 
 The **C++ REST SDK** is a Microsoft project for cloud-based client-server communication in native code using a modern asynchronous C++ API design. This project aims to help C++ developers connect to and interact with services.
 
@@ -37,7 +39,6 @@ If you handle multiple dependencies in your project is better to add a *conanfil
     cpprestsdk:shared=True # False
 
     [generators]
-    txt
     cmake
 
 Complete the installation of requirements for your project running:</small></span>
