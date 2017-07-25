@@ -4,8 +4,9 @@
  *
  * Copyright 2017 Uilian Ries <uilianries@gmail.com>
  */
- #define CATCH_CONFIG_MAIN
- #include "catch.hpp"
+#define CATCH_CONFIG_MAIN
+#include "catch.hpp"
+
 
 #include <cpprest/version.h>
 #include <cpprest/json.h>
