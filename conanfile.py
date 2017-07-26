@@ -31,6 +31,10 @@ class CppRestSDKConan(ConanFile):
         if self.settings.os == "Linux":
             self.options.values = OptionsValues.loads("Boost:fPIC=True")
 
+    def configure(self):
+        if self.settings.os == "Macos" and not self.options.shared:
+            raise Exception("Only shared=True is supported for Mac")
+
     def build(self):
         cmake = CMake(self)
         cmake.definitions["CMAKE_INSTALL_PREFIX"] = self.install_dir
