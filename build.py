@@ -5,13 +5,15 @@ import platform
 
 if __name__ == "__main__":
     builder = ConanMultiPackager(args="--build missing")
-    builder.add_common_builds(shared_option_name="cpprestsdk:shared", pure_c=False)
-    filtered_builds = []
-    for settings, options, env_vars, build_requires in builder.builds:
-        if settings["compiler"] == "clang" and platform.system() == "Linux":
-            settings["compiler.libcxx"] = "libc++"
-        if options["cpprestsdk:shared"] == False and platform.system() == "Darwin":
-            continue
-        filtered_builds.append([settings, options, env_vars, build_requires])
-    builder.builds = filtered_builds
-    builder.run()
+    if platform.system() == "Darwin":
+        builder.add_common_builds(pure_c=False)
+        builder.run()
+    else
+        builder.add_common_builds(shared_option_name="cpprestsdk:shared", pure_c=False)
+        filtered_builds = []
+        for settings, options, env_vars, build_requires in builder.builds:
+            if settings["compiler"] == "clang" and platform.system() == "Linux":
+                settings["compiler.libcxx"] = "libc++"
+            filtered_builds.append([settings, options, env_vars, build_requires])
+        builder.builds = filtered_builds
+        builder.run()
