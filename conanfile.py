@@ -30,16 +30,16 @@ class CppRestSDKConan(ConanFile):
     def config_options(self):
         if self.settings.os == "Linux":
             self.options.values = OptionsValues.loads("Boost:fPIC=True")
-
-    def configure(self):
-        if self.settings.os == "Macos" and not self.options.shared:
-            raise Exception("Only shared=True is supported for Mac")
+        if self.settings.os == "Macos":
+            self.options.remove("shared")
 
     def build(self):
         cmake = CMake(self)
         cmake.definitions["CMAKE_INSTALL_PREFIX"] = self.install_dir
         cmake.definitions["BUILD_TESTS"] = True if self.scope.dev and self.scope.build_tests else False
         cmake.definitions["BUILD_SAMPLES"] = True if self.scope.dev and self.scope.build_samples else False
+        if self.settings.os == "Macos":
+            cmake.definitions["BUILD_SHARED_LIBS"] = True
         cmake.configure()
         cmake.build()
         cmake.install()
