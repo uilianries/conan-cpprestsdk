@@ -76,6 +76,7 @@ install:
   - pip.exe install conan --upgrade
   - pip.exe install conan_package_tools
   - conan user
+  - conan remote add_ref Boost/1.62.0@lasote/stable conan-transit
 
 test_script:
   - python build.py
