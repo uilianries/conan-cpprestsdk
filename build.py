@@ -10,7 +10,7 @@ if __name__ == "__main__":
     for settings, options, env_vars, build_requires in builder.builds:
         if settings["compiler"] == "clang" and platform.system() == "Linux":
             settings["compiler.libcxx"] = "libc++"
-        if options["cpprestsdk:shared"] == "False" and platform.system() == "Darwin":
+        if options["cpprestsdk:shared"] == False and platform.system() == "Darwin":
             continue
         filtered_builds.append([settings, options, env_vars, build_requires])
     builder.builds = filtered_builds
