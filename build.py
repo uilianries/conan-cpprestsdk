@@ -8,7 +8,7 @@ if __name__ == "__main__":
     if platform.system() == "Darwin":
         builder.add_common_builds(pure_c=False)
         builder.run()
-    else
+    else:
         builder.add_common_builds(shared_option_name="cpprestsdk:shared", pure_c=False)
         filtered_builds = []
         for settings, options, env_vars, build_requires in builder.builds:
