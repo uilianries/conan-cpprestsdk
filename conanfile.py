@@ -1,8 +1,6 @@
 """Conan.io recipe for CppRestSDK library
 """
 from conans import ConanFile, CMake
-from conans.model.options import OptionsValues
-from conans.model.requires import Requirements
 from os import path
 from tempfile import mkdtemp
 
@@ -20,7 +18,7 @@ class CppRestSDKConan(ConanFile):
     author = "Uilian Ries <uilianries@gmail.com>"
     description = "A project for cloud-based client-server communication in native code using a modern asynchronous C++ API design"
     license = "https://github.com/Microsoft/cpprestsdk/blob/master/license.txt"
-    requires = "Boost/1.60.0@lasote/stable", "OpenSSL/1.0.2l@conan/stable"
+    requires = "Boost/1.62.0@lasote/stable", "OpenSSL/1.0.2l@conan/stable"
     cpprestsdk_dir = "%s-%s" % (name, version)
     install_dir = mkdtemp()
     default_options = "shared=True", \
@@ -49,17 +47,15 @@ class CppRestSDKConan(ConanFile):
 
     def config_options(self):
         if self.settings.os == "Linux":
-            self.options.values = OptionsValues.loads("Boost:fPIC=True")
+            self.options["Boost"].fPIC = True
         if self.settings.os == "Macos":
-            self.options.remove("shared")
+            self.options.shared = True
 
     def build(self):
         cmake = CMake(self)
         cmake.definitions["CMAKE_INSTALL_PREFIX"] = self.install_dir
-        cmake.definitions["BUILD_TESTS"] = True if self.scope.dev and self.scope.build_tests else False
-        cmake.definitions["BUILD_SAMPLES"] = True if self.scope.dev and self.scope.build_samples else False
-        if self.settings.os == "Macos":
-            cmake.definitions["BUILD_SHARED_LIBS"] = True
+        cmake.definitions["BUILD_TESTS"] = False
+        cmake.definitions["BUILD_SAMPLES"] = False
         cmake.configure()
         cmake.build()
         cmake.install()
