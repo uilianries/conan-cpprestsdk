@@ -31,13 +31,9 @@ class CppRestSDKConan(ConanFile):
         "Boost:without_graph_parallel=True", \
         "Boost:without_iostreams=True", \
         "Boost:without_locale=True", \
-        "Boost:without_log=True", \
-        "Boost:without_math=True", \
         "Boost:without_mpi=True", \
         "Boost:without_program_options=True", \
-        "Boost:without_serialization=True", \
         "Boost:without_signals=True", \
-        "Boost:without_test=True", \
         "Boost:without_timer=True", \
         "Boost:without_type_erasure=True", \
         "Boost:without_wave=True"
