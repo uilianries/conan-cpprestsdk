@@ -11,3 +11,4 @@ if [[ "$(uname -s)" == 'Darwin' ]]; then
 fi
 
 python build.py
+conan upload -r upload_repo Boost/1.62.0@lasote/stable --all --force
