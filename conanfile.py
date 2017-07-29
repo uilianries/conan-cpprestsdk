@@ -31,9 +31,9 @@ class CppRestSDKConan(ConanFile):
             raise Exception("Macos only support shared library version")
 
     def build(self):
-        cmake = CMake(self)        
+        cmake = CMake(self)
         cmake.definitions["BUILD_TESTS"] = False
-        cmake.definitions["BUILD_SAMPLES"] = False        
+        cmake.definitions["BUILD_SAMPLES"] = False
         cmake.configure()
         cmake.build()
 
@@ -41,10 +41,13 @@ class CppRestSDKConan(ConanFile):
         self.copy("license.txt",  dst=".", src=self.cpprestsdk_dir)
         self.copy(pattern="*", dst="include", src=path.join("cpprestsdk-2.9.1", "Release", "include"))
         self.copy(pattern="*", dst="lib", src="lib", keep_path=False)
-        self.copy(pattern="*", dst="bin", src="bin", keep_path=False)
+        self.copy(pattern="*.so*", dst="lib", src=path.join("cpprestsdk-2.9.1", "Release", "Binaries"), keep_path=False)
+        self.copy(pattern="*.dylib", dst="lib", src=path.join("cpprestsdk-2.9.1", "Release", "Binaries"), keep_path=False)
+        self.copy(pattern="*.dll", dst="bin", src=path.join("cpprestsdk-2.9.1", "Release", "Binaries"), keep_path=False)
+
 
     def package_info(self):
         lib_name = "cpprest_2_9" if self.settings.compiler == "Visual Studio" else "cpprest"
         self.cpp_info.libs.append(lib_name)
-        if self.settings.os == "Linux": 
+        if self.settings.os == "Linux":
             self.cpp_info.libs.append("pthread")
