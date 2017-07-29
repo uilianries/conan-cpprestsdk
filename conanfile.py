@@ -29,9 +29,10 @@ class CppRestSDKConan(ConanFile):
             self.options["Boost"].fPIC = True
 
     def configure(self):
-        del self.settings.compiler.libcxx
         if self.settings.os == "Macos" or self.settings.os == "Windows":
             self.options.shared = True
+        if self.settings.os == "Linux" and self.settings.compiler == "clang":
+            del self.settings.compiler.libcxx
 
     def build(self):
         cmake = CMake(self)
