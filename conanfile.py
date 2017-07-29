@@ -27,8 +27,13 @@ class CppRestSDKConan(ConanFile):
     def config_options(self):
         if self.settings.os == "Linux":
             self.options["Boost"].fPIC = True
+
+    def configure(self):
+        if self.settings.compiler == "Visual Studio" and \
+           self.options.shared and "MT" in str(self.settings.compiler.runtime):
+            self.options.shared = False
         if self.settings.os == "Macos" and not self.options.shared:
-            raise Exception("Macos only support shared library version")
+            self.options.shared = True
 
     def build(self):
         cmake = CMake(self)
@@ -41,10 +46,8 @@ class CppRestSDKConan(ConanFile):
         self.copy("license.txt",  dst=".", src=self.cpprestsdk_dir)
         self.copy(pattern="*", dst="include", src=path.join("cpprestsdk-2.9.1", "Release", "include"))
         self.copy(pattern="*", dst="lib", src="lib", keep_path=False)
-        self.copy(pattern="*.so*", dst="lib", src=path.join("cpprestsdk-2.9.1", "Release", "Binaries"), keep_path=False)
-        self.copy(pattern="*.dylib", dst="lib", src=path.join("cpprestsdk-2.9.1", "Release", "Binaries"), keep_path=False)
-        self.copy(pattern="*.dll", dst="bin", src=path.join("cpprestsdk-2.9.1", "Release", "Binaries"), keep_path=False)
-
+        self.copy(pattern="*.dll", dst="bin", src="bin", keep_path=False)
+        self.copy(pattern="*", dst="lib", src=path.join("cpprestsdk-2.9.1", "Release", "Binaries"), keep_path=False)
 
     def package_info(self):
         lib_name = "cpprest_2_9" if self.settings.compiler == "Visual Studio" else "cpprest"
