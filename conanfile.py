@@ -45,7 +45,9 @@ class CppRestSDKConan(ConanFile):
         self.copy(pattern="*", dst="include", src=path.join("cpprestsdk-2.9.1", "Release", "include"))        
         self.copy(pattern="*.dll", dst="bin", src="bin", keep_path=False)
         self.copy(pattern="*.lib", dst="lib", src="lib", keep_path=False)
-        self.copy(pattern="*", dst="lib", src=path.join("cpprestsdk-2.9.1", "Release", "Binaries"), keep_path=False)
+        self.copy(pattern="*.a", dst="lib", src="lib", keep_path=False)
+        self.copy(pattern="*.so*", dst="lib", src=path.join("cpprestsdk-2.9.1", "Release", "Binaries"), keep_path=False)
+        self.copy(pattern="*.dylib", dst="lib", src=path.join("cpprestsdk-2.9.1", "Release", "Binaries"), keep_path=False)
 
     def package_info(self):
         lib_name = "cpprest_2_9" if self.settings.compiler == "Visual Studio" else "cpprest"
