@@ -11,6 +11,9 @@ if __name__ == "__main__":
         # XXX (uilian.ries): MTd could not link
         if settings["compiler"] == "Visual Studio" and settings["compiler.runtime"] == "MTd":
             continue
+        # XXX (uilian.ries): libstdc++ could not link on Linux
+        if settings["compiler"] == "clang" and platform.system() == "Linux":
+            settings["compiler.libcxx"] = "libc++"
         filtered_builds.append([settings, options, env_vars, build_requires])
     builder.builds = filtered_builds
     builder.run()

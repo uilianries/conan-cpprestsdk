@@ -31,8 +31,6 @@ class CppRestSDKConan(ConanFile):
     def configure(self):
         if self.settings.os == "Macos" or self.settings.os == "Windows":
             self.options.shared = True
-        if self.settings.os == "Linux" and self.settings.compiler == "clang":
-            del self.settings.compiler.libcxx
 
     def build(self):
         cmake = CMake(self)
@@ -43,7 +41,7 @@ class CppRestSDKConan(ConanFile):
 
     def package(self):
         self.copy("license.txt",  dst=".", src=self.cpprestsdk_dir)
-        self.copy(pattern="*", dst="include", src=path.join("cpprestsdk-2.9.1", "Release", "include"))        
+        self.copy(pattern="*", dst="include", src=path.join("cpprestsdk-2.9.1", "Release", "include"))
         self.copy(pattern="*.dll", dst="bin", src="bin", keep_path=False)
         self.copy(pattern="*.lib", dst="lib", src="lib", keep_path=False)
         self.copy(pattern="*.a", dst="lib", src="lib", keep_path=False)
