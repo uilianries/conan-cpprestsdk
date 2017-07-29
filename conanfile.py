@@ -29,8 +29,7 @@ class CppRestSDKConan(ConanFile):
             self.options["Boost"].fPIC = True
 
     def configure(self):
-        if self.settings.compiler == "Visual Studio" and \
-           not self.options.shared and "MT" in str(self.settings.compiler.runtime):
+        if self.settings.compiler == "Visual Studio" and not self.options.shared:
             self.options.shared = True
         if self.settings.os == "Macos" and not self.options.shared:
             self.options.shared = True
