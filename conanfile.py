@@ -2,7 +2,6 @@
 """
 from conans import ConanFile, CMake
 from os import path
-from tempfile import mkdtemp
 
 
 class CppRestSDKConan(ConanFile):
@@ -20,23 +19,7 @@ class CppRestSDKConan(ConanFile):
     license = "https://github.com/Microsoft/cpprestsdk/blob/master/license.txt"
     requires = "Boost/1.62.0@lasote/stable", "OpenSSL/1.0.2l@conan/stable"
     cpprestsdk_dir = "%s-%s" % (name, version)
-    install_dir = mkdtemp()
-    default_options = "shared=True", \
-        "Boost:without_container=True", \
-        "Boost:without_context=True", \
-        "Boost:without_coroutine=True", \
-        "Boost:without_coroutine2=True", \
-        "Boost:without_exception=True", \
-        "Boost:without_graph=True", \
-        "Boost:without_graph_parallel=True", \
-        "Boost:without_iostreams=True", \
-        "Boost:without_locale=True", \
-        "Boost:without_mpi=True", \
-        "Boost:without_program_options=True", \
-        "Boost:without_signals=True", \
-        "Boost:without_timer=True", \
-        "Boost:without_type_erasure=True", \
-        "Boost:without_wave=True"
+    default_options = "shared=True"
 
     def source(self):
         self.run("git clone --depth=50 --branch=v%s %s.git %s" % (self.version, self.url, self.cpprestsdk_dir))
@@ -48,22 +31,20 @@ class CppRestSDKConan(ConanFile):
             raise Exception("Macos only support shared library version")
 
     def build(self):
-        cmake = CMake(self)
-        cmake.definitions["CMAKE_INSTALL_PREFIX"] = self.install_dir
+        cmake = CMake(self)        
         cmake.definitions["BUILD_TESTS"] = False
-        cmake.definitions["BUILD_SAMPLES"] = False
-        if self.settings.os == "Macos":
-            cmake.definitions["BUILD_SHARED_LIBS"] = True
+        cmake.definitions["BUILD_SAMPLES"] = False        
         cmake.configure()
         cmake.build()
-        cmake.install()
 
     def package(self):
         self.copy("license.txt",  dst=".", src=self.cpprestsdk_dir)
-        self.copy(pattern="*", dst="include", src=path.join(self.install_dir, "include"))
-        self.copy(pattern="*", dst="lib", src=path.join(self.install_dir, "lib"), keep_path=False)
+        self.copy(pattern="*", dst="include", src=path.join("cpprestsdk-2.9.1", "Release", "include"))
+        self.copy(pattern="*", dst="lib", src="lib", keep_path=False)
+        self.copy(pattern="*", dst="bin", src="bin", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.libs.append("cpprest")
-        if self.settings.os == "Linux":
+        lib_name = "cpprest_2_9" if self.settings.compiler == "Visual Studio" else "cpprest"
+        self.cpp_info.libs.append(lib_name)
+        if self.settings.os == "Linux": 
             self.cpp_info.libs.append("pthread")
