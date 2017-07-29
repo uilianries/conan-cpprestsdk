@@ -11,8 +11,6 @@ if __name__ == "__main__":
         # Avoid to build Macos and static library
         if options["cpprestsdk:shared"] == False and platform.system() == "Darwin":
             continue
-        if settings["compiler.version"] != "14":
-            continue
         # Avoid to build CLang + libstdc++
         if settings["compiler"] == "clang" and platform.system() == "Linux":
             settings["compiler.libcxx"] = "libc++"
