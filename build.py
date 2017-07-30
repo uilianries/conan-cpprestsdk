@@ -8,10 +8,10 @@ if __name__ == "__main__":
     builder.add_common_builds(shared_option_name="cpprestsdk:shared", pure_c=False)
     filtered_builds = []
     for settings, options, env_vars, build_requires in builder.builds:
-        # Avoid to build Macos and static library
-        if options["cpprestsdk:shared"] == False and platform.system() == "Darwin":
+        # XXX (uilian.ries): MTd could not link
+        if settings["compiler"] == "Visual Studio" and settings["compiler.runtime"] == "MTd":
             continue
-        # Avoid to build CLang + libstdc++
+        # XXX (uilian.ries): libstdc++ could not link on Linux
         if settings["compiler"] == "clang" and platform.system() == "Linux":
             settings["compiler.libcxx"] = "libc++"
         filtered_builds.append([settings, options, env_vars, build_requires])

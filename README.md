@@ -1,4 +1,5 @@
-[![Travis Build Status](https://travis-ci.org/uilianries/conan-cpprestsdk.svg?branch=release/2.9.1)](https://travis-ci.org/uilianries/conan-cpprestsdk)
+[![Download](https://api.bintray.com/packages/uilianries/conan/cpprestsdk%3Auilianries/images/download.svg) ](https://bintray.com/uilianries/conan/cpprestsdk%3Auilianries/_latestVersion)
+[![Travis Build Status](https://travis-ci.org/uilianries/conan-cpprestsdk.svg?branch=release%2F2.9.1)](https://travis-ci.org/uilianries/conan-cpprestsdk)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/goisbnt12o3ueq3o/branch/release/2.9.1?svg=true)](https://ci.appveyor.com/project/uilianries/conan-cpprestsdk/branch/release/2.9.1)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 
